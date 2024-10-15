@@ -14,5 +14,5 @@ public interface IUserService {
     APIResponse<List<UserResponse>> getUser(@ModelAttribute UserRequest userRequest);
     APIResponse<User> createUser(CreateUserRequest createUserRequest);
     APIResponse<UserResponse> getOneUser (String userID);
-    APIResponse<User> updateUser(UpdateUserRequest updateUserRequest);
+    APIResponse<UserResponse> updateUser(UpdateUserRequest updateUserRequest);
 }

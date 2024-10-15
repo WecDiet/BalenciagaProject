@@ -20,6 +20,7 @@ public class UserResponse {
     private boolean sex;
     private String birthday;
     private String username;
+    private String password;
     private String photos;
     private boolean status;
     private List<Role> roles;
