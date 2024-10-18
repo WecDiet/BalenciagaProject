@@ -1,10 +1,14 @@
 package com.balenciaga.DTO.Request.User;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class UserRequest {
     private String firstName;
     private String lastName;

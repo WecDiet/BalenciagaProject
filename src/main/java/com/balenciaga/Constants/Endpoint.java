@@ -7,6 +7,7 @@ public class Endpoint {
     public static final class User{
         public static final String BASE = API_PREFIX + "/users";
         public static final String NEW = "/new";
-        public static final String ID = "/{userID}";
+        public static final String ID = "/id={userID}";
+        public static final String DELETE_MANY = "/delete-many";
     }
 }

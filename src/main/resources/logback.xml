@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Define a file appender that writes log messages to a file -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Define the log file location -->
+        <file>D:\Project_Java\Project_SpringBoot\BalenciagaProject\src\main\resources\logs\application.log</file>
+        <!-- Define the log file pattern and rolling policy (daily rotation) -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:\Project_Java\Project_SpringBoot\BalenciagaProject\src\main\resources\logs\application-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Keep 30 days of log files -->
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>16KB</totalSizeCap>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <!-- Define the log format -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Console appender (optional, if you also want logs in the console) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Set the logging levels for the appenders -->
+    <root level="info">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

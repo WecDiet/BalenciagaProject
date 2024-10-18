@@ -2,6 +2,7 @@ package com.balenciaga.Services.User;
 
 import com.balenciaga.DTO.Request.User.CreateUserRequest;
 import com.balenciaga.DTO.Request.User.UpdateUserRequest;
+import com.balenciaga.DTO.Request.User.UserMutiDeleteRequest;
 import com.balenciaga.DTO.Request.User.UserRequest;
 import com.balenciaga.DTO.Response.APIResponse;
 import com.balenciaga.DTO.Response.User.UserResponse;
@@ -15,4 +16,6 @@ public interface IUserService {
     APIResponse<User> createUser(CreateUserRequest createUserRequest);
     APIResponse<UserResponse> getOneUser (String userID);
     APIResponse<UserResponse> updateUser(UpdateUserRequest updateUserRequest);
+    APIResponse<Boolean> deleteUser(String userID);
+    APIResponse<Boolean> deleteMutiUser(UserMutiDeleteRequest userMutiDeleteRequest);
 }

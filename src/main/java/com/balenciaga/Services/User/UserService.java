@@ -1,9 +1,11 @@
 package com.balenciaga.Services.User;
 
-import com.balenciaga.Config.Validate;
+//import com.balenciaga.Config.Validate;
 import com.balenciaga.DTO.Request.User.CreateUserRequest;
 import com.balenciaga.DTO.Request.User.UpdateUserRequest;
+import com.balenciaga.DTO.Request.User.UserMutiDeleteRequest;
 import com.balenciaga.DTO.Request.User.UserRequest;
+import com.balenciaga.Exceptions.DataExistedException;
 import com.balenciaga.Repositories.IRoleRepository;
 import com.balenciaga.DTO.Response.APIResponse;
 import com.balenciaga.DTO.Response.User.UserResponse;
@@ -14,6 +16,8 @@ import com.balenciaga.Repositories.IUserRepository;
 import com.balenciaga.Utils.LocalizationUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,30 +42,42 @@ public class UserService implements IUserService {
     @Autowired
     private IRoleRepository IRoleRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Override
     public APIResponse<List<UserResponse>> getUser(@ModelAttribute UserRequest userRequest) {
+        logger.info("Get all user");
         ArrayList<UserResponse> userResponseList; // danh sách chưa các phản hồi của user
         List<User> userList; // danh sách chưa danh sách user
         userList = IUserRepository.findAll();
         userResponseList = new ArrayList<>(userList.stream()
                 .map(user -> modelMapper.map(user, UserResponse.class))
                 .toList());
-        return new APIResponse<>(userResponseList, localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS));
+        List<String> messages = new ArrayList<>();
+        messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS));
+        return new APIResponse<>(userResponseList,messages);
     }
 
     @Override
     public APIResponse<User> createUser(CreateUserRequest createUserRequest) {
         if(IUserRepository.existsByEmail(createUserRequest.getEmail())) {
-            return new APIResponse<>(null,localizationUtil.getLocalizedMessage(MessageKey.USER_ALREADY_EXIST));
+            List<String> messages = new ArrayList<>();
+            messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_ALREADY_EXIST));
+            logger.info("User already existed");
+            return new APIResponse<>(null,messages);
         }
         if(IUserRepository.existsByPhoneNumber(createUserRequest.getPhoneNumber())){
-            return new APIResponse<>(null, localizationUtil.getLocalizedMessage(MessageKey.USER_PHONE_EXISTED));
+            List<String> messages = new ArrayList<>();
+            messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_PHONE_EXISTED));
+            logger.info("Phone number already existed");
+            return new APIResponse<>(null,messages);
         }
         User userCreated = modelMapper.map(createUserRequest, User.class);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             userCreated.setBirthday(dateFormat.parse(createUserRequest.getBirthday()));
         } catch (ParseException e) {
+            logger.info("Invalid date format. Expected format: yyyy-MM-dd");
             throw new RuntimeException("Invalid date format. Expected format: yyyy-MM-dd");
         }
         userCreated.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
@@ -71,27 +87,29 @@ public class UserService implements IUserService {
                     .orElseThrow(() -> new RuntimeException("Role not found: " + role));
             managedRoles.add(managedRole);
         }
+        List<String> messages = new ArrayList<>();
+        messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_CREATE_SUCCESS));
         userCreated.setRoles(managedRoles);
         IUserRepository.save(userCreated);
-        return new APIResponse<>(userCreated, localizationUtil.getLocalizedMessage(MessageKey.USER_CREATE_SUCCESS));
+        logger.info("User created successfully");
+        return new APIResponse<>(userCreated, messages);
     }
 
     @Override
     public APIResponse<UserResponse> getOneUser(String userID) {
-        if(!Validate.isValidUUID(userID)) {
-            throw new RuntimeException("Invalid UUID string: " + userID);
-        }
         User user = IUserRepository.findById(UUID.fromString(userID))
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userID));
+                .orElseThrow(() -> new DataExistedException("User not found with ID" + userID));
         UserResponse userResponse = modelMapper.map(user, UserResponse.class);
-        return new APIResponse<>(userResponse, localizationUtil.getLocalizedMessage(MessageKey.USER_GET_ONE_SUCCESS));
+        List<String> messages = new ArrayList<>();
+        messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_ONE_SUCCESS));
+        logger.info("Get user by ID successfully");
+        return new APIResponse<>(userResponse, messages);
     }
 
     @Override
     public APIResponse<UserResponse> updateUser(UpdateUserRequest updateUserRequest) {
         User user = IUserRepository.findByEmail(updateUserRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + updateUserRequest.getEmail()));
-        System.out.println(updateUserRequest.getEmail());
         modelMapper.map(updateUserRequest, user);
         if (updateUserRequest.getRoles() != null) {
             Set<Role> updatedRoles = new HashSet<>();
@@ -105,7 +123,39 @@ public class UserService implements IUserService {
         user.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
         IUserRepository.save(user);
         UserResponse userResponse = modelMapper.map(user, UserResponse.class);
-        return new APIResponse<>(userResponse, localizationUtil.getLocalizedMessage(MessageKey.USER_UPDATE_SUCCESS));
+        List<String> messages = new ArrayList<>();
+        messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_UPDATE_SUCCESS));
+        logger.info("Update user successfully");
+        return new APIResponse<>(userResponse, messages);
+    }
+
+    @Override
+    public APIResponse<Boolean> deleteUser(String userID) {
+        User user = IUserRepository.findById(UUID.fromString(userID))
+                .orElseThrow(() -> new DataExistedException("User not found with ID" + userID));
+        user.getRoles().clear();
+        IUserRepository.save(user);
+        IUserRepository.delete(user);
+        List<String> messages = new ArrayList<>();
+        messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_DELETE_SUCCESS));
+        logger.info("Delete user successfully");
+        return new APIResponse<>(true, messages);
+    }
+
+    @Override
+    public APIResponse<Boolean> deleteMutiUser(UserMutiDeleteRequest userMutiDeleteRequest) {
+        List<String> userList = userMutiDeleteRequest.getId();
+        userList.forEach(userID -> {
+            User userDelete = IUserRepository.findById(UUID.fromString(userID))
+                    .orElseThrow(() -> new DataExistedException("User not found with ID" + userID));
+            userDelete.getRoles().clear();
+            IUserRepository.save(userDelete);
+            IUserRepository.delete(userDelete);
+        });
+        List<String> messages = new ArrayList<>();
+        messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_DELETE_SUCCESS));
+        logger.info("Delete user successfully");
+        return new APIResponse<>(true, messages);
     }
 
 }

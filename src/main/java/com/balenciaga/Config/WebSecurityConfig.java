@@ -34,6 +34,7 @@ public class WebSecurityConfig {
                                 // API Get All User
                                 // API Get One User
                                 String.format("%s/*", Endpoint.API_PREFIX),
+                                String.format("%s/users", Endpoint.API_PREFIX),
                                 String.format("%s/users/*", Endpoint.API_PREFIX)
                         ).permitAll()
 
@@ -49,6 +50,12 @@ public class WebSecurityConfig {
                                 String.format("%s/users/*", Endpoint.API_PREFIX)
                         ).permitAll()
 
+                        // Phương thức DELETE cho phép tất cả các request
+                        .requestMatchers(HttpMethod.DELETE,
+                                // API Delete User
+                                String.format("%s/users/*", Endpoint.API_PREFIX),
+                                String.format("%s/users/delete-many", Endpoint.API_PREFIX)
+                        ).permitAll()
                         .anyRequest()
                         .authenticated()
         )
@@ -65,7 +72,7 @@ public class WebSecurityConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE");
+                        .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(), HttpMethod.DELETE.name());
             }
         };
     }
