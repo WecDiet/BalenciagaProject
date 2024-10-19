@@ -23,5 +23,6 @@ public class UserResponse {
     private String password;
     private String photos;
     private boolean status;
-    private List<Role> roles;
+//    private List<Role> roles;
+    private Role role;
 }
