@@ -9199,3 +9199,106 @@ org.springframework.security.access.AccessDeniedException: Access Denied
 2024-10-30 18:42:26 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-10-30 18:42:26 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2024-10-30 18:42:26 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-10-30 19:28:42 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-10-30 19:28:42 [main] INFO  c.b.BalenciagaProjectApplication - Starting BalenciagaProjectApplication using Java 17.0.8 with PID 19428 (D:\Project_Java\Project_SpringBoot\BalenciagaProject\target\classes started by huynh in D:\Project_Java\Project_SpringBoot\BalenciagaProject)
+2024-10-30 19:28:42 [main] INFO  c.b.BalenciagaProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2024-10-30 19:28:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-30 19:28:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 43 ms. Found 3 JPA repository interfaces.
+2024-10-30 19:28:43 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-10-30 19:28:43 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-10-30 19:28:43 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-10-30 19:28:43 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-10-30 19:28:43 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-10-30 19:28:43 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1138 ms
+2024-10-30 19:28:43 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-30 19:28:43 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-30 19:28:43 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-10-30 19:28:44 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-30 19:28:44 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-10-30 19:28:44 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5d3b6585
+2024-10-30 19:28:44 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-10-30 19:28:44 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-10-30 19:28:44 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-30 19:28:45 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-30 19:28:45 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-30 19:28:45 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.balenciaga.Config.SecurityConfig$$SpringCGLIB$$0@53202b06, webSecurityConfig=com.balenciaga.Config.WebSecurityConfig@6debf1b8}
+2024-10-30 19:28:45 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-10-30 19:28:45 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2024-10-30 19:28:45 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-10-30 19:28:45 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-10-30 19:28:45 [main] INFO  c.b.BalenciagaProjectApplication - Started BalenciagaProjectApplication in 3.691 seconds (process running for 4.273)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-30 19:28:53 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-10-30 19:28:53 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain [RequestMatcher=any request, Filters=[org.springframework.security.web.session.DisableEncodeUrlFilter@35f3f1cd, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@25e8810f, org.springframework.security.web.context.SecurityContextHolderFilter@7bb4f09d, org.springframework.security.web.header.HeaderWriterFilter@698394bf, org.springframework.security.web.authentication.logout.LogoutFilter@1b6e32ee, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c045627, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1488d1c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3afd745d, org.springframework.security.web.access.ExceptionTranslationFilter@c0b10ae, org.springframework.security.web.access.intercept.AuthorizationFilter@6e6ec71f]] (1/1)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/v1/admin/users?page=0&limit=0
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (5/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (6/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.s.HttpSessionRequestCache - matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (7/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (8/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (9/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (10/10)
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing GET /api/v1/admin/users?page=0&limit=0
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on GET /api/v1/admin/users?page=0&limit=0 using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1569/0x000001b10197a208@5ab45d2e
+2024-10-30 19:28:53 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/v1/admin/users?page=0&limit=0
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.c.HttpSessionSecurityContextRepository - No HttpSession currently exists
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2024-10-30 19:28:53 [http-nio-8080-exec-1] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain [RequestMatcher=any request, Filters=[org.springframework.security.web.session.DisableEncodeUrlFilter@35f3f1cd, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@25e8810f, org.springframework.security.web.context.SecurityContextHolderFilter@7bb4f09d, org.springframework.security.web.header.HeaderWriterFilter@698394bf, org.springframework.security.web.authentication.logout.LogoutFilter@1b6e32ee, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c045627, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1488d1c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3afd745d, org.springframework.security.web.access.ExceptionTranslationFilter@c0b10ae, org.springframework.security.web.access.intercept.AuthorizationFilter@6e6ec71f]] (1/1)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing DELETE /api/v1/admin/users/a78f80f3-69b4-4631-b2ac-25338e70b440
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (5/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (6/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.s.HttpSessionRequestCache - matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (7/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (8/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (9/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (10/10)
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing DELETE /api/v1/admin/users/a78f80f3-69b4-4631-b2ac-25338e70b440
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on DELETE /api/v1/admin/users/a78f80f3-69b4-4631-b2ac-25338e70b440 using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1569/0x000001b10197a208@5ab45d2e
+2024-10-30 19:29:07 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured DELETE /api/v1/admin/users/a78f80f3-69b4-4631-b2ac-25338e70b440
+2024-10-30 19:29:07 [http-nio-8080-exec-3] INFO  c.b.B.A.Controller.UserController - Format ID to UUID
+2024-10-30 19:29:07 [http-nio-8080-exec-3] INFO  c.b.B.A.Controller.UserController - Delete user by ID
+2024-10-30 19:29:07 [http-nio-8080-exec-3] INFO  c.b.Services.User.UserService - Delete user successfully
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.c.HttpSessionSecurityContextRepository - No HttpSession currently exists
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2024-10-30 19:29:07 [http-nio-8080-exec-3] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain [RequestMatcher=any request, Filters=[org.springframework.security.web.session.DisableEncodeUrlFilter@35f3f1cd, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@25e8810f, org.springframework.security.web.context.SecurityContextHolderFilter@7bb4f09d, org.springframework.security.web.header.HeaderWriterFilter@698394bf, org.springframework.security.web.authentication.logout.LogoutFilter@1b6e32ee, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c045627, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1488d1c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3afd745d, org.springframework.security.web.access.ExceptionTranslationFilter@c0b10ae, org.springframework.security.web.access.intercept.AuthorizationFilter@6e6ec71f]] (1/1)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/v1/admin/users?page=0&limit=0
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (5/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (6/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.s.HttpSessionRequestCache - matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (7/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (8/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (9/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (10/10)
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing GET /api/v1/admin/users?page=0&limit=0
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on GET /api/v1/admin/users?page=0&limit=0 using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1569/0x000001b10197a208@5ab45d2e
+2024-10-30 19:29:19 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/v1/admin/users?page=0&limit=0
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.c.HttpSessionSecurityContextRepository - No HttpSession currently exists
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2024-10-30 19:29:19 [http-nio-8080-exec-4] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2024-10-30 19:54:25 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-30 19:54:25 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-10-30 19:54:25 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
