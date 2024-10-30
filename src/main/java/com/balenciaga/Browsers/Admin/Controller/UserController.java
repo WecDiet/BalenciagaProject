@@ -5,6 +5,7 @@ import com.balenciaga.DTO.Request.User.CreateUserRequest;
 import com.balenciaga.DTO.Request.User.UpdateUserRequest;
 import com.balenciaga.DTO.Request.User.UserMutiDeleteRequest;
 import com.balenciaga.DTO.Request.User.UserRequest;
+import com.balenciaga.DTO.Response.PagingResponse;
 import com.balenciaga.DTO.Response.User.UserResponse;
 import com.balenciaga.Entities.User;
 import com.balenciaga.DTO.Response.APIResponse;
@@ -35,8 +36,7 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @GetMapping
-    public ResponseEntity<APIResponse<?>> getAllUser(@ModelAttribute UserRequest userRequest) {
-        logger.info("Get all user (API: http://localhost:8080/api/v1/admin/users)");
+    public ResponseEntity<PagingResponse<?>> getAllUser(@ModelAttribute UserRequest userRequest) {
         return ResponseEntity.ok(userService.getUser(userRequest));
     }
 

@@ -5,6 +5,7 @@ import com.balenciaga.DTO.Request.User.CreateUserRequest;
 import com.balenciaga.DTO.Request.User.UpdateUserRequest;
 import com.balenciaga.DTO.Request.User.UserMutiDeleteRequest;
 import com.balenciaga.DTO.Request.User.UserRequest;
+import com.balenciaga.DTO.Response.PagingResponse;
 import com.balenciaga.Exceptions.DataExistedException;
 import com.balenciaga.Repositories.IRoleRepository;
 import com.balenciaga.DTO.Response.APIResponse;
@@ -13,15 +14,22 @@ import com.balenciaga.Constants.MessageKey;
 import com.balenciaga.Entities.Role;
 import com.balenciaga.Entities.User;
 import com.balenciaga.Repositories.IUserRepository;
+import com.balenciaga.Repositories.Specification.UserSpecification;
 import com.balenciaga.Utils.LocalizationUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,17 +54,31 @@ public class UserService implements IUserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
-    public APIResponse<List<UserResponse>> getUser(@ModelAttribute UserRequest userRequest) {
-        logger.info("Get all user");
-        ArrayList<UserResponse> userResponseList; // danh sách chưa các phản hồi của user
-        List<User> userList; // danh sách chưa danh sách user
-        userList = IUserRepository.findAll();
+    public PagingResponse<List<UserResponse>> getUser(@ModelAttribute UserRequest userRequest) {
+        ArrayList<UserResponse> userResponseList;
+        List<User> userList;
+        Pageable pageable;
+        if(userRequest.getPage() == 0 && userRequest.getLimit() == 0){
+            userList = IUserRepository.findAll();
+            userResponseList = new ArrayList<>(userList.stream()
+                    .map(user -> modelMapper.map(user, UserResponse.class))
+                    .toList());
+            List<String> messages = new ArrayList<>();
+            messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS));
+            return new PagingResponse<>(userResponseList, messages, 1, (long) userResponseList.size());
+        }else{
+            userRequest.setPage(Math.max(userRequest.getPage(), 1));
+            pageable = PageRequest.of(userRequest.getPage() - 1, userRequest.getLimit(), Sort.by("createdDate").descending());
+        }
+
+        Specification<User> specification = UserSpecification.filterUsers(userRequest.getEmployeeCode(), userRequest.getFullName());
+//        Specification<User> specification = UserSpecification.filterUsers(userRequest.getSearch());
+        Page<User> userPage = IUserRepository.findAll(specification, pageable);
+        userList = userPage.getContent();
         userResponseList = new ArrayList<>(userList.stream()
                 .map(user -> modelMapper.map(user, UserResponse.class))
                 .toList());
-        List<String> messages = new ArrayList<>();
-        messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS));
-        return new APIResponse<>(userResponseList,messages);
+        return new PagingResponse<>(userResponseList, List.of(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS)), userPage.getTotalPages(), userPage.getTotalElements());
     }
 
     @Override
@@ -82,15 +104,18 @@ public class UserService implements IUserService {
             throw new RuntimeException("Invalid date format. Expected format: yyyy-MM-dd");
         }
         userCreated.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
-        Set<Role> managedRoles = new HashSet<>();
-        for (Role role : createUserRequest.getRoles()) {
-            Role managedRole = IRoleRepository.findByName(role.getName())
-                    .orElseThrow(() -> new RuntimeException("Role not found: " + role));
-            managedRoles.add(managedRole);
+        userCreated.setFullName(createUserRequest.getFirstName() + " "+createUserRequest.getMiddleName()+ " " + createUserRequest.getLastName());
+        if (createUserRequest.getRoles() != null) {
+            Set<Role> managedRoles = new HashSet<>();
+            for (Role role : createUserRequest.getRoles()) {
+                Role existingRole = IRoleRepository.findByName(role.getName())
+                        .orElseThrow(() -> new RuntimeException("Role not found: " + role.getName()));
+                managedRoles.add(existingRole);
+            }
+            userCreated.setRoles(managedRoles);
         }
         List<String> messages = new ArrayList<>();
         messages.add(localizationUtil.getLocalizedMessage(MessageKey.USER_CREATE_SUCCESS));
-        userCreated.setRoles(managedRoles);
         IUserRepository.save(userCreated);
         logger.info("User created successfully");
         return new APIResponse<>(userCreated, messages);

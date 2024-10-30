@@ -3,9 +3,6 @@ package com.balenciaga.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
@@ -24,11 +21,20 @@ public class User {
     @Column(name = "first_name", length = 45, nullable = false)
     private String firstName;
 
+    @Column(name = "middle_name", length = 45, nullable = false)
+    private String middleName;
+
     @Column(name = "last_name", length = 45, nullable = false)
     private String lastName;
 
+    @Column(name = "full_name", length = 150, nullable = false)
+    private String fullName;
+
     @Column(name = "email", length = 200, nullable = false, unique = true)
     private String email;
+
+    @Column(name = "employeeCode", length = 8, unique = true)
+    private String employeeCode;
 
     @Column(name = "phoneNumber", length = 45,nullable = false, unique = true)
     private String  phoneNumber;
@@ -38,6 +44,18 @@ public class User {
 
     @Column(name = "birthday")
     private Date birthday;
+
+    @Column(name = "street", length = 200)
+    private String street;
+
+    @Column(name = "ward", length = 150)
+    private String ward;
+
+    @Column(name = "district", length = 100)
+    private String district;
+
+    @Column(name = "city", length = 100)
+    private String city;
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
@@ -76,16 +94,25 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public User(String firstName, String lastName, String email, String  phoneNumber, boolean sex, Date birthday, String username, String password, String photos, boolean status) {
+
+    public User(String firstName, String middleName, String lastName, String fullName, String email, String employeeCode, String phoneNumber, boolean sex, String street, String ward, Date birthday, String district, String city, String username, String password, String photos, boolean status, Set<Role> roles) {
         this.firstName = firstName;
+        this.middleName = middleName;
         this.lastName = lastName;
+        this.fullName = fullName;
         this.email = email;
+        this.employeeCode = employeeCode;
         this.phoneNumber = phoneNumber;
         this.sex = sex;
+        this.street = street;
+        this.ward = ward;
         this.birthday = birthday;
+        this.district = district;
+        this.city = city;
         this.username = username;
         this.password = password;
         this.photos = photos;
         this.status = status;
+        this.roles = roles;
     }
 }

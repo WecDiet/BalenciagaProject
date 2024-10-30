@@ -2,6 +2,8 @@ package com.balenciaga.DTO.Response;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -9,5 +11,7 @@ import lombok.*;
 @Builder
 public class PagingResponse<T> {
     private T data;
-    String message;
+    private List<String> message;
+    private int totalPage;
+    private Long totalCount;
 }
