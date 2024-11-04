@@ -15,6 +15,8 @@ import java.util.Set;
 public class UpdateUserRequest {
     @NotEmpty(message = "First name is required")
     private String firstName;
+    @NotEmpty(message = "Middle name is required")
+    private String middleName;
     @NotEmpty(message = "Last name is required")
     private String lastName;
     @NotEmpty(message = "Email is required")

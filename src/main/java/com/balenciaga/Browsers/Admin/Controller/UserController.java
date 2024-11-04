@@ -1,10 +1,7 @@
 package com.balenciaga.Browsers.Admin.Controller;
 
 import com.balenciaga.Constants.Endpoint;
-import com.balenciaga.DTO.Request.User.CreateUserRequest;
-import com.balenciaga.DTO.Request.User.UpdateUserRequest;
-import com.balenciaga.DTO.Request.User.UserMutiDeleteRequest;
-import com.balenciaga.DTO.Request.User.UserRequest;
+import com.balenciaga.DTO.Request.User.*;
 import com.balenciaga.DTO.Response.PagingResponse;
 import com.balenciaga.DTO.Response.User.UserResponse;
 import com.balenciaga.Entities.User;
@@ -36,7 +33,17 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @GetMapping
-    public ResponseEntity<PagingResponse<?>> getAllUser(@ModelAttribute UserRequest userRequest) {
+    public ResponseEntity<PagingResponse<?>> getAllUser(@ModelAttribute UserRequest userRequest,BindingResult result) {
+        if (result.hasErrors()) {
+            List<String> errorMessages = result.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .toList();
+            // Creating an APIResponse with error messages
+            APIResponse<User> errorResponse = new APIResponse<>(null, errorMessages);
+            logger.error("Error Search user: " + errorMessages);
+            return ResponseEntity.badRequest().body(new PagingResponse<>(null,  errorMessages, 0, (long) 0));
+        }
         return ResponseEntity.ok(userService.getUser(userRequest));
     }
 
@@ -125,4 +132,21 @@ public class UserController {
         logger.info("Delete multiple users");
         return ResponseEntity.ok(userService.deleteMutiUser(userMutiDeleteRequest));
     }
+
+//    @GetMapping(Endpoint.User.ROLENAME)
+//    public ResponseEntity<PagingResponse<?>> getUserByRoleName(@ModelAttribute userByRoleRequest userByRoleRequest,BindingResult result) {
+//        if (result.hasErrors()) {
+//            List<String> errorMessages = result.getFieldErrors()
+//                    .stream()
+//                    .map(FieldError::getDefaultMessage)
+//                    .toList();
+//            // Creating an APIResponse with error messages
+////            APIResponse<UserResponse> errorResponse = new APIResponse<>(null, errorMessages);
+//            logger.error("Error getting user by role: " + errorMessages);
+//            return ResponseEntity.badRequest().body(new PagingResponse<>(null,  errorMessages, 0, (long) 0));
+//        }
+//        logger.info("Get user by role");
+//        System.out.println(userByRoleRequest.getRoleName());
+//        return ResponseEntity.ok(userService.getUserByRole(userByRoleRequest));
+//    }
 }

@@ -35,7 +35,10 @@ public class WebSecurityConfig {
                                 // API Get One User
                                 String.format("%s/*", Endpoint.API_PREFIX),
                                 String.format("%s/users", Endpoint.API_PREFIX),
-                                String.format("%s/users/*", Endpoint.API_PREFIX)
+                                String.format("%s/users/*", Endpoint.API_PREFIX),
+                                String.format("%s/users/user_detail/*", Endpoint.API_PREFIX),
+                                String.format("%s/users/roles", Endpoint.API_PREFIX),
+                                String.format("%s/users/roles/*", Endpoint.API_PREFIX)
                         ).permitAll()
 
                         // Phương thức POST cho phép tất cả các request

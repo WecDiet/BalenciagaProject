@@ -18,9 +18,8 @@ public class SecurityConfig{
     private IAuthRepository authRepository;
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncode(){
        return new BCryptPasswordEncoder(10);
     }
-
-
+    
 }

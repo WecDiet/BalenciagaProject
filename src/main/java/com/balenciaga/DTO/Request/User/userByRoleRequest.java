@@ -1,14 +1,16 @@
 package com.balenciaga.DTO.Request.User;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class UserRequest {
+@AllArgsConstructor
+public class userByRoleRequest {
     private int limit= -1;
     private int page = -1;
     @NotEmpty(message = "Full name is required")

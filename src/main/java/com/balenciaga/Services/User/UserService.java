@@ -1,10 +1,7 @@
 package com.balenciaga.Services.User;
 
 //import com.balenciaga.Config.Validate;
-import com.balenciaga.DTO.Request.User.CreateUserRequest;
-import com.balenciaga.DTO.Request.User.UpdateUserRequest;
-import com.balenciaga.DTO.Request.User.UserMutiDeleteRequest;
-import com.balenciaga.DTO.Request.User.UserRequest;
+import com.balenciaga.DTO.Request.User.*;
 import com.balenciaga.DTO.Response.PagingResponse;
 import com.balenciaga.Exceptions.DataExistedException;
 import com.balenciaga.Repositories.IRoleRepository;
@@ -21,19 +18,21 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -46,7 +45,7 @@ public class UserService implements IUserService {
     @Autowired
     private LocalizationUtil localizationUtil;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncode;
     @Autowired
     private IRoleRepository IRoleRepository;
 
@@ -59,7 +58,8 @@ public class UserService implements IUserService {
         List<User> userList;
         Pageable pageable;
         if(userRequest.getPage() == 0 && userRequest.getLimit() == 0){
-            userList = IUserRepository.findAll();
+            Specification<User> specification = UserSpecification.byRoleName(userRequest.getRoleName());
+            userList = IUserRepository.findAll(specification);
             userResponseList = new ArrayList<>(userList.stream()
                     .map(user -> modelMapper.map(user, UserResponse.class))
                     .toList());
@@ -68,11 +68,9 @@ public class UserService implements IUserService {
             return new PagingResponse<>(userResponseList, messages, 1, (long) userResponseList.size());
         }else{
             userRequest.setPage(Math.max(userRequest.getPage(), 1));
-            pageable = PageRequest.of(userRequest.getPage() - 1, userRequest.getLimit(), Sort.by("createdDate").descending());
+            pageable = PageRequest.of(userRequest.getPage() - 1, userRequest.getLimit());
         }
-
-        Specification<User> specification = UserSpecification.filterUsers(userRequest.getEmployeeCode(), userRequest.getFullName());
-//        Specification<User> specification = UserSpecification.filterUsers(userRequest.getSearch());
+        Specification<User> specification = UserSpecification.filterUsers(userRequest.getRoleName(),userRequest.getEmployeeCode(), userRequest.getFullName());
         Page<User> userPage = IUserRepository.findAll(specification, pageable);
         userList = userPage.getContent();
         userResponseList = new ArrayList<>(userList.stream()
@@ -103,7 +101,7 @@ public class UserService implements IUserService {
             logger.info("Invalid date format. Expected format: yyyy-MM-dd");
             throw new RuntimeException("Invalid date format. Expected format: yyyy-MM-dd");
         }
-        userCreated.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
+        userCreated.setPassword(passwordEncode.encode(createUserRequest.getPassword()));
         userCreated.setFullName(createUserRequest.getFirstName() + " "+createUserRequest.getMiddleName()+ " " + createUserRequest.getLastName());
         if (createUserRequest.getRoles() != null) {
             Set<Role> managedRoles = new HashSet<>();
@@ -146,7 +144,8 @@ public class UserService implements IUserService {
             }
             user.setRoles(updatedRoles);
         }
-        user.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
+        user.setPassword(passwordEncode.encode(updateUserRequest.getPassword()));
+        user.setFullName(updateUserRequest.getFirstName() + " "+updateUserRequest.getMiddleName()+ " " + updateUserRequest.getLastName());
         IUserRepository.save(user);
         UserResponse userResponse = modelMapper.map(user, UserResponse.class);
         List<String> messages = new ArrayList<>();
@@ -183,5 +182,37 @@ public class UserService implements IUserService {
         logger.info("Delete user successfully");
         return new APIResponse<>(true, messages);
     }
+
+//    @Override
+//    public PagingResponse<List<UserResponse>> getUserByRole(@ModelAttribute userByRoleRequest userByRoleRequest) {
+//        ArrayList<UserResponse> userResponseList;
+//        List<User> userList;
+//        Pageable pageable;
+//
+//        // Nếu page và limit là 0, lấy toàn bộ danh sách user với role cụ thể
+//        if (userByRoleRequest.getPage() == 0 && userByRoleRequest.getLimit() == 0) {
+//            Specification<User> specification = UserSpecification.byRoleName(userByRoleRequest.getRoleName());
+//            userList = IUserRepository.findAll(specification);
+//            userResponseList = new ArrayList<>(userList.stream()
+//                    .map(user -> modelMapper.map(user, UserResponse.class))
+//                    .toList());
+//            return new PagingResponse<>(userResponseList, List.of(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS)), 1, (long) userResponseList.size());
+//        } else {
+//            // Thiết lập pageable với trang và giới hạn được cung cấp
+//            userByRoleRequest.setPage(Math.max(userByRoleRequest.getPage(), 1));
+//            pageable = PageRequest.of(userByRoleRequest.getPage() - 1, userByRoleRequest.getLimit());
+//        }
+//        Specification<User> specification = UserSpecification.filterUsers(userByRoleRequest.getRoleName(), userByRoleRequest.getEmployeeCode(), userByRoleRequest.getFullName());
+//        // Thực hiện truy vấn phân trang
+//        Page<User> userPage = IUserRepository.findAll(specification, pageable);
+//        userList = userPage.getContent();
+//        // Chuyển đổi danh sách user thành danh sách UserResponse
+//        userResponseList = new ArrayList<>(userList.stream()
+//                .map(user -> modelMapper.map(user, UserResponse.class))
+//                .toList());
+//
+//        // Trả về phản hồi phân trang
+//        return new PagingResponse<>(userResponseList, List.of(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS)), userPage.getTotalPages(), userPage.getTotalElements());
+//    }
 
 }
