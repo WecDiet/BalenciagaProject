@@ -58,7 +58,7 @@ public class UserService implements IUserService {
         List<User> userList;
         Pageable pageable;
         if(userRequest.getPage() == 0 && userRequest.getLimit() == 0){
-            Specification<User> specification = UserSpecification.byRoleName(userRequest.getRoleName());
+            Specification<User> specification = UserSpecification.filterUsers(userRequest.getRole(),userRequest.getEmployeeCode(), userRequest.getFullName(), userRequest.getEmail());
             userList = IUserRepository.findAll(specification);
             userResponseList = new ArrayList<>(userList.stream()
                     .map(user -> modelMapper.map(user, UserResponse.class))
@@ -70,7 +70,7 @@ public class UserService implements IUserService {
             userRequest.setPage(Math.max(userRequest.getPage(), 1));
             pageable = PageRequest.of(userRequest.getPage() - 1, userRequest.getLimit());
         }
-        Specification<User> specification = UserSpecification.filterUsers(userRequest.getRoleName(),userRequest.getEmployeeCode(), userRequest.getFullName());
+        Specification<User> specification = UserSpecification.filterUsers(userRequest.getRole(),userRequest.getEmployeeCode(), userRequest.getFullName(), userRequest.getEmail());
         Page<User> userPage = IUserRepository.findAll(specification, pageable);
         userList = userPage.getContent();
         userResponseList = new ArrayList<>(userList.stream()

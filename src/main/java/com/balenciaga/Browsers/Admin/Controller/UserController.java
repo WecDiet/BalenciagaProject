@@ -40,7 +40,7 @@ public class UserController {
                     .map(FieldError::getDefaultMessage)
                     .toList();
             // Creating an APIResponse with error messages
-            APIResponse<User> errorResponse = new APIResponse<>(null, errorMessages);
+//            APIResponse<User> errorResponse = new APIResponse<>(null, errorMessages);
             logger.error("Error Search user: " + errorMessages);
             return ResponseEntity.badRequest().body(new PagingResponse<>(null,  errorMessages, 0, (long) 0));
         }

@@ -16,5 +16,7 @@ public class UserRequest {
     @NotEmpty(message = "Employee code is required")
     private String employeeCode;
     @NotEmpty(message = "Role name is required")
-    private String roleName;
+    private String role;
+    @NotEmpty(message = "Email is required")
+    private String email;
 }
