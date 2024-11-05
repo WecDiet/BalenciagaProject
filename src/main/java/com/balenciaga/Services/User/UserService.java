@@ -183,36 +183,5 @@ public class UserService implements IUserService {
         return new APIResponse<>(true, messages);
     }
 
-//    @Override
-//    public PagingResponse<List<UserResponse>> getUserByRole(@ModelAttribute userByRoleRequest userByRoleRequest) {
-//        ArrayList<UserResponse> userResponseList;
-//        List<User> userList;
-//        Pageable pageable;
-//
-//        // Nếu page và limit là 0, lấy toàn bộ danh sách user với role cụ thể
-//        if (userByRoleRequest.getPage() == 0 && userByRoleRequest.getLimit() == 0) {
-//            Specification<User> specification = UserSpecification.byRoleName(userByRoleRequest.getRoleName());
-//            userList = IUserRepository.findAll(specification);
-//            userResponseList = new ArrayList<>(userList.stream()
-//                    .map(user -> modelMapper.map(user, UserResponse.class))
-//                    .toList());
-//            return new PagingResponse<>(userResponseList, List.of(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS)), 1, (long) userResponseList.size());
-//        } else {
-//            // Thiết lập pageable với trang và giới hạn được cung cấp
-//            userByRoleRequest.setPage(Math.max(userByRoleRequest.getPage(), 1));
-//            pageable = PageRequest.of(userByRoleRequest.getPage() - 1, userByRoleRequest.getLimit());
-//        }
-//        Specification<User> specification = UserSpecification.filterUsers(userByRoleRequest.getRoleName(), userByRoleRequest.getEmployeeCode(), userByRoleRequest.getFullName());
-//        // Thực hiện truy vấn phân trang
-//        Page<User> userPage = IUserRepository.findAll(specification, pageable);
-//        userList = userPage.getContent();
-//        // Chuyển đổi danh sách user thành danh sách UserResponse
-//        userResponseList = new ArrayList<>(userList.stream()
-//                .map(user -> modelMapper.map(user, UserResponse.class))
-//                .toList());
-//
-//        // Trả về phản hồi phân trang
-//        return new PagingResponse<>(userResponseList, List.of(localizationUtil.getLocalizedMessage(MessageKey.USER_GET_SUCCESS)), userPage.getTotalPages(), userPage.getTotalElements());
-//    }
 
 }
